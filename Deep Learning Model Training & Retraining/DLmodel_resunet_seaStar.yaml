@@ -1,0 +1,82 @@
+SYSTEM:
+    NUM_GPUS: 1
+    NUM_CPUS: 1
+
+PROBLEM:
+    TYPE: INSTANCE_SEG
+    NDIM: 3D
+
+DATA: 
+    CHANNELS: BCM
+    CHANNEL_WEIGHTS: (1, 1)
+    CONTOUR_MODE: "thick"
+    REMOVE_BEFORE_MW: True
+    REFLECT_TO_COMPLETE_SHAPE: True
+    EXTRACT_RANDOM_PATCH: False
+    PATCH_SIZE: (64, 64, 16, 1)
+    CHECK_GENERATORS: False
+    MW_OPTIMIZE_THS: False
+    MW_TH1: 0.7
+    MW_TH2: 0.15
+    MW_TH3: 0.65
+    TRAIN:
+        IN_MEMORY: True
+        PADDING: (0,0,0)
+        OVERLAP: (0,0,0)
+    VAL:
+        FROM_TRAIN: True
+        SPLIT_TRAIN: 0.1
+        PADDING: (0,0,0)
+        OVERLAP: (0,0,0)
+    TEST:
+        IN_MEMORY: False
+        LOAD_GT: False
+        PADDING: (24,24,6)
+        OVERLAP: (0,0,0)
+        
+AUGMENTOR:
+    ENABLE: True
+    RANDOM_ROT: True
+    VFLIP: True
+    HFLIP: True
+    ELASTIC: True
+    E_ALPHA: (12, 16)
+    E_SIGMA: 4
+    G_BLUR: True
+    G_SIGMA: (1.0, 2.0)
+    MB_KERNEL: (3, 7)
+    BRIGHTNESS: True
+    BRIGHTNESS_FACTOR: (0.1, 0.3)
+    CONTRAST: True
+
+MODEL:
+    ARCHITECTURE: resunet
+    FEATURE_MAPS: [16, 32, 48]
+    DROPOUT_VALUES: [0.1, 0.1, 0.1]
+    Z_DOWN: 1
+    LOAD_CHECKPOINT: True
+
+LOSS:
+  TYPE: CE
+  
+TRAIN:
+    ENABLE: False
+    OPTIMIZER: ADAM
+    LR: 1.E-5
+    BATCH_SIZE: 5
+    EPOCHS: 1300
+    PATIENCE: 50
+  
+TEST:
+    ENABLE: True
+    AUGMENTATION: False
+    STATS:
+        PER_PATCH: True
+        MERGE_PATCHES: True
+        FULL_IMG: False
+    VORONOI_ON_MASK: False
+    MATCHING_SEGCOMPARE: False
+    VERBOSE: True
+
+PATHS:
+    MAP_CODE_DIR: /home/pedro/Escritorio/jesus/mAP_3Dvolume
