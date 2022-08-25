@@ -13,12 +13,12 @@ function SeaStar3DNucleiSegmentation(inPath, imageName, outputPath, outputName, 
     binaryImage = bwareaopen(binaryImage, 30, 26);
     
     se = strel('sphere', 3);
-    labeledImage = bwlabeln(binaryImage, 26); %Conectivity = 26
+    labeledImage = bwlabeln(binaryImage, 26);
     labeledImage2 = labeledImage;
     
     uniqueLables = unique(labeledImage); 
     
-    for cellIx = 2:length(uniqueLables) % 1 = image background
+    for cellIx = 2:length(uniqueLables)
         cellId = uniqueLables(cellIx);
         if size(unique(labeledImage2 == cellId), 1) == 2
             cellProps = regionprops3(labeledImage2 == cellId, "Volume", "Centroid");
