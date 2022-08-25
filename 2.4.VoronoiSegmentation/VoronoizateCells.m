@@ -15,7 +15,6 @@ function [voronoiSeaStar] = VoronoizateCells(binaryMask, imgCells)
     labelsPerimIds = voronoiSeaStar(perimCells);
     
     %% From valid pixels get closest seed (add this value)
-
     if isempty(gcp('nocreate'))
         parfor nId = 1:length(idsToFill)
             distCoord = pdist2([col(nId), row(nId), z(nId)], [colPer, rowPer, zPer]);
