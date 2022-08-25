@@ -28,7 +28,7 @@ labelledImage2 = labelledImage;
 
 uniqueLables = unique(labelledImage); 
 
-for cellIx = 2:length(uniqueLables) % 1 = image background
+for cellIx = 2:length(uniqueLables)
     cellId = uniqueLables(cellIx);
     if size(unique(labelledImage2 == cellId), 1) == 2
         cellProps = regionprops3(labelledImage2 == cellId, "Volume", "Centroid");
