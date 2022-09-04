@@ -1,7 +1,19 @@
 # 3D-Epithelia-Segmentation
 
-### **Master's Degree Final Project:** Semi-automatic three-dimensional segmentation protocol of _Patiria miniata_ epithelia during embryonic development
+**Project:** Semi-automatic three-dimensional segmentation protocol of _Patiria miniata_ epithelia during embryonic development
 
-### *Author:* Miguel Ángel Spínola Tena
+**Author:** Miguel Ángel Spínola Tena
 
-### *Date:* 4 September 2022
+**Date:** 4 September 2022
+
+Welcome to my very first GitHub repository! Here you might find the code that I personally have employed for the development of my Master's Final Project (Master's Degree in Omics Data Analysis and Systems Biology). Here we are proposing a novel three-dimensional (3D) segmentation protocol able to segment accurately _Patiria miniata_ epithelia, combining a Voronoi computational model and Deep Learning (DL). This approach could be used to save time in the critical point of 3D segmentation, the creation of a new training dataset.
+
+- First of all, the folder 'Read and Write Tiff MATLAB' contains two different functions that enabled us to open in MATLAB stacks of images from Fiji in 'Tiff' format (readStackTiff.m) and save files from MATLAB as 'Tiff' files (writeStackTiff.m), respectively. Thanks to these functions we were able to use efficiently both MATLAB and Fiji softwares to manipulate our stacks of images. 
+
+- Afterwards, within the folder called 'Images Pre-Processing' is located the code employed for the pre-processing and the adaptation of the original stacks of images in order to make them suitable for the developed pipeline. 'homogenizeImages.m' is a script from MATLAB used to adjust the dimensions of all the stacks of images (stained-nuclei, stained cells-contours and any other stacks of images which dimensions needed to be adjusted) employed along this work. Thanks to this function, we expanded the depth of these images and ensured that every stacks of images had the same dimensions. In addition to this pre-processing, further adjustments were needed for those stacks of images that were introduced to the convolutional neural network (CNN) of our DL model, hence we processed them through a Macro script from Fiji ('normalizeImages.ijm') in order to normalize these images' properties. 
+
+- Then, the folder under the name of '3D Nuclei Segmentation' contains two additional functions from MATLAB. The first one of them ('SeaStar3DNucleiSegmentation.m') was developed to perform an accurate 3D nuclei segmentation from the provided (and previously pre-processed) stained-nuclei stacks of images, whereas the second function ('SeaStar3DBatchNucleiSegmentation.m') is and adaptation from the previous one in order to fit such function within a 'parfor' loop, which enabled us to segment three-dimensionally various stacks of images at the same time and to segment automatically a folder full of stained-nuclei stacks of images. 
+
+- Subsequently, the folder 'Voronoi Segmentation' comprises another two functions from MATLAB 'homogenized&ReducedVoronoi.m' and 'VoronoizateCells.m'. The 'homogenized&ReducedVornoi' function served to, firstly adjust the dimensions of the stacks of images needed to perform a Voronoi segmentation that had not been previously pre-processed (binary masks and 3D nuclei segmentation results), and secondly to perform such Voronoi segmentation through the employment of the second function within the folder ('VoronoizateCells.m') and to save the resultant Voronoi diagram as a 'Tiff' image ('writeStackTiff.m' from folder 'Read and Write Tiff MATLAB').
+
+- Lastly, within the folder 'Deep Learning Model Training & Retraining' a 'yaml' file is found ('DLmodel_resunet3D_seastar.yaml'). This is a human-readable configuration file which contains every single specification of the training and retraining (reinforcement learning) that underwent our DL model, just like the structure of the CNN employed and other details. The architecture, data augmentation (DA) parameters and specifications stablished for the first training of our DL model were later applied (the same values) to the reinforcement learning of such model, obtaining eventually our final reinforced DL model.
